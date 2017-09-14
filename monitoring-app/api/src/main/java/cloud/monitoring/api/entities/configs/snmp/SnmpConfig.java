@@ -1,6 +1,7 @@
 package cloud.monitoring.api.entities.configs.snmp;
 
 import cloud.monitoring.api.entities.configs.Config;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,20 +10,23 @@ import java.util.List;
  * Created by Roman on 09.09.2017 12:29.
  */
 public class SnmpConfig extends Config {
+    @JsonProperty(value = "community")
     private String community;
-    private String ip;
+    @JsonProperty(value = "version")
     private BigInteger version;
+    @JsonProperty(value = "port")
     private Integer port;
+    @JsonProperty(value = "timeout")
     private Integer timeout;
+    @JsonProperty(value = "metrics")
     private List<String> metrics;
 
     public SnmpConfig() {
     }
 
     public SnmpConfig(BigInteger objectID, String cron,  String community, String ip, BigInteger version, Integer port, Integer timeout, List<String> metrics) {
-        super(objectID, cron);
+        super(objectID, ip, cron);
         this.community = community;
-        this.ip = ip;
         this.version = version;
         this.port = port;
         this.timeout = timeout;
@@ -35,14 +39,6 @@ public class SnmpConfig extends Config {
 
     public void setCommunity(String community) {
         this.community = community;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 
     public BigInteger getVersion() {
@@ -81,7 +77,6 @@ public class SnmpConfig extends Config {
     public String toString() {
         return "SnmpConfig{" +
                 "community='" + community + '\'' +
-                ", ip='" + ip + '\'' +
                 ", version=" + version +
                 ", port=" + port +
                 ", timeout=" + timeout +

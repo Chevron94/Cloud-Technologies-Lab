@@ -1,20 +1,27 @@
 package cloud.monitoring.api.entities.configs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigInteger;
 
 /**
  * Created by Roman on 09.09.2017 15:00.
  */
-public abstract class Config {
+public class Config {
+    @JsonProperty(value = "object-id")
     private BigInteger objectID;
+    @JsonProperty(value = "ip")
+    private String ip;
+    @JsonProperty(value = "cron")
     private String cron;
 
     public Config() {
     }
 
-    public Config(BigInteger objectID, String cron) {
+    public Config(BigInteger objectID, String ip, String cron) {
         this.objectID = objectID;
         this.cron = cron;
+        this.ip = ip;
     }
 
     public BigInteger getObjectID() {
@@ -33,10 +40,19 @@ public abstract class Config {
         this.cron = cron;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     @Override
     public String toString() {
         return "Config{" +
                 "objectID=" + objectID +
+                ", ip='" + ip + '\'' +
                 ", cron='" + cron + '\'' +
                 '}';
     }

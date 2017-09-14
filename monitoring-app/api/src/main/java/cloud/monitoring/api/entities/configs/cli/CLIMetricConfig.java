@@ -1,16 +1,21 @@
 package cloud.monitoring.api.entities.configs.cli;
 
+import cloud.monitoring.api.entities.configs.MetricConfig;
+
+import java.math.BigInteger;
+
 /**
  * Created by Roman on 09.09.2017 12:31.
  */
-public class CLIMetricConfig {
+public class CLIMetricConfig extends MetricConfig {
     private String command;
     private String regexp;
 
     public CLIMetricConfig() {
     }
 
-    public CLIMetricConfig(String command, String regexp) {
+    public CLIMetricConfig(String command, String regexp, BigInteger metricID) {
+        super(metricID);
         this.command = command;
         this.regexp = regexp;
     }

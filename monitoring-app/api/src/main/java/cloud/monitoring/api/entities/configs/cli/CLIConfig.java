@@ -18,8 +18,8 @@ public class CLIConfig extends Config {
     public CLIConfig() {
     }
 
-    public CLIConfig(BigInteger objectId, String cron, String login, String password, Integer timeout, Integer port, List<CLIMetricConfig> cliMetricConfigs) {
-        super(objectId, cron);
+    public CLIConfig(BigInteger objectId, String ip, String cron, String login, String password, Integer timeout, Integer port, List<CLIMetricConfig> cliMetricConfigs) {
+        super(objectId, ip, cron);
         this.login = login;
         this.password = password;
         this.timeout = timeout;
