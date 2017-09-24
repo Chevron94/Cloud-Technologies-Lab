@@ -17,8 +17,12 @@ import java.util.Date;
  */
 @RestController
 public class MetricController {
+    private final MetricBean metricBean;
+
     @Autowired
-    MetricBean metricBean;
+    public MetricController(MetricBean metricBean) {
+        this.metricBean = metricBean;
+    }
 
     @RequestMapping(path = "/metrics", method = RequestMethod.GET)
     public ResponseEntity getLastMetrics(
