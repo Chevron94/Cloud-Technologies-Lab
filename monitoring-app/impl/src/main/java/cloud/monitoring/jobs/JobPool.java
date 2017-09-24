@@ -1,15 +1,16 @@
-package cloud.monitoring.impl.jobs;
+package cloud.monitoring.jobs;
 
 import cloud.monitoring.api.entities.configs.Config;
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
-import cloud.monitoring.impl.beans.MetricBean;
-import cloud.monitoring.impl.jobs.cli.CLIJob;
-import cloud.monitoring.impl.jobs.snmp.SnmpJob;
+import cloud.monitoring.beans.MetricBean;
+import cloud.monitoring.jobs.cli.CLIJob;
+import cloud.monitoring.jobs.snmp.SnmpJob;
 import org.apache.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import static org.quartz.JobBuilder.newJob;
 

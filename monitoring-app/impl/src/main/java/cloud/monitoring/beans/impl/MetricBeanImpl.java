@@ -1,10 +1,10 @@
-package cloud.monitoring.impl.beans.impl;
+package cloud.monitoring.beans.impl;
 
 import cloud.monitoring.api.entities.rest.MetricResponse;
 import cloud.monitoring.api.entities.rest.MetricValue;
-import cloud.monitoring.impl.beans.MetricBean;
-import cloud.monitoring.impl.entities.Metric;
-import cloud.monitoring.impl.repositories.MetricRepository;
+import cloud.monitoring.beans.MetricBean;
+import cloud.monitoring.entities.Metric;
+import cloud.monitoring.repositories.MetricRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +34,7 @@ public class MetricBeanImpl implements MetricBean {
 
     @Override
     public MetricResponse getMetrics(BigInteger objectID, BigInteger metricTypeID, Integer count) {
-        List<Metric> metrics = metricRepository.getMetricsByObjectIDAndMetricTypeIDOrderByDate(objectID, metricTypeID, new PageRequest(0, count, Sort.Direction.DESC));
+        List<Metric> metrics = metricRepository.getMetricsByObjectIDAndMetricTypeIDOrderByDate(objectID, metricTypeID, new PageRequest(0, count, Sort.Direction.DESC, "date"));
         LOGGER.debug("Metrics: "+metrics);
         return formMetricResponse(objectID, metricTypeID, metrics);
     }

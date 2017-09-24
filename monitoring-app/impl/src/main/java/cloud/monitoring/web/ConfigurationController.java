@@ -1,29 +1,30 @@
 package cloud.monitoring.web;
 
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
-import cloud.monitoring.impl.beans.ConfigurationBean;
+import cloud.monitoring.beans.ConfigurationBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.ws.rs.core.Response;
 
 /**
  * Created by Roman on 24.09.2017 15:30.
  */
-@Component
+@Controller
 public class ConfigurationController {
 
     @Autowired
     ConfigurationBean configurationBean;
 
     @RequestMapping(path = "/configurations/snmp", method = RequestMethod.POST)
-    public Response applySNMPConfiguration(SnmpConfig snmpConfig){
+    public ResponseEntity applySNMPConfiguration(@RequestBody SnmpConfig snmpConfig){
         if (configurationBean.applyConfiguration(snmpConfig)){
-            return Response.ok().build();
+            return ResponseEntity.ok().build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Configuration apply failed").build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Configuration apply failed");
         }
     }
 }

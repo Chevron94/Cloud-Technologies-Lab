@@ -1,6 +1,6 @@
-package cloud.monitoring.impl.repositories;
+package cloud.monitoring.repositories;
 
-import cloud.monitoring.impl.entities.Metric;
+import cloud.monitoring.entities.Metric;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

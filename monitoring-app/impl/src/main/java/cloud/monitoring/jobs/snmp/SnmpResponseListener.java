@@ -1,9 +1,9 @@
-package cloud.monitoring.impl.jobs.snmp;
+package cloud.monitoring.jobs.snmp;
 
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpMetricConfig;
-import cloud.monitoring.impl.beans.MetricBean;
-import cloud.monitoring.impl.entities.Metric;
+import cloud.monitoring.beans.MetricBean;
+import cloud.monitoring.entities.Metric;
 import org.apache.log4j.Logger;
 import org.snmp4j.PDU;
 import org.snmp4j.event.ResponseEvent;
@@ -25,9 +25,11 @@ public class SnmpResponseListener implements ResponseListener {
 
     private Map<String, BigInteger> metricsMapping;
     private MetricBean metricBean;
+    private BigInteger objectID;
     public SnmpResponseListener(SnmpConfig snmpConfig, MetricBean metricBean) {
         this.metricBean = metricBean;
         metricsMapping = new HashMap<>();
+        this.objectID = snmpConfig.getObjectID();
         for (SnmpMetricConfig metricConfig:snmpConfig.getMetrics()){
             metricsMapping.put(metricConfig.getOid(), metricConfig.getMetricID());
         }
@@ -39,6 +41,7 @@ public class SnmpResponseListener implements ResponseListener {
         if (pdu != null && pdu.getVariableBindings() != null) {
             for (VariableBinding variableBinding : pdu.getVariableBindings()) {
                 Metric metric = new Metric();
+                metric.setObjectID(objectID);
                 metric.setDate(new Date());
                 metric.setValue(new BigDecimal(variableBinding.getVariable().toString()));
                 metric.setMetricTypeID(metricsMapping.get(variableBinding.getOid().toString()));

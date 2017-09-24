@@ -1,7 +1,7 @@
-package cloud.monitoring.impl.beans;
+package cloud.monitoring.beans;
 
 import cloud.monitoring.api.entities.rest.MetricResponse;
-import cloud.monitoring.impl.entities.Metric;
+import cloud.monitoring.entities.Metric;
 
 import java.math.BigInteger;
 import java.util.Date;

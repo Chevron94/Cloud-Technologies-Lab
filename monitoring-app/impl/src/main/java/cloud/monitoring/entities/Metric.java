@@ -1,4 +1,4 @@
-package cloud.monitoring.impl.entities;
+package cloud.monitoring.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

@@ -1,6 +1,7 @@
 package cloud.monitoring.api.entities.configs.snmp;
 
 import cloud.monitoring.api.entities.configs.MetricConfig;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigInteger;
 
@@ -8,6 +9,7 @@ import java.math.BigInteger;
  * Created by Roman on 14.09.2017 15:57.
  */
 public class SnmpMetricConfig extends MetricConfig {
+    @JsonProperty(value = "oid")
     private String oid;
 
     public SnmpMetricConfig() {

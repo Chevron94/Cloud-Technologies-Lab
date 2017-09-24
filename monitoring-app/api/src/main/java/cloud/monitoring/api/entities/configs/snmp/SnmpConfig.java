@@ -13,7 +13,7 @@ public class SnmpConfig extends Config {
     @JsonProperty(value = "community")
     private String community;
     @JsonProperty(value = "version")
-    private BigInteger version;
+    private Integer version;
     @JsonProperty(value = "port")
     private Integer port;
     @JsonProperty(value = "timeout")
@@ -24,7 +24,7 @@ public class SnmpConfig extends Config {
     public SnmpConfig() {
     }
 
-    public SnmpConfig(BigInteger objectID, String cron,  String community, String ip, BigInteger version, Integer port, Integer timeout, List<SnmpMetricConfig> metrics) {
+    public SnmpConfig(BigInteger objectID, String cron,  String community, String ip, Integer version, Integer port, Integer timeout, List<SnmpMetricConfig> metrics) {
         super(objectID, ip, cron);
         this.community = community;
         this.version = version;
@@ -41,11 +41,11 @@ public class SnmpConfig extends Config {
         this.community = community;
     }
 
-    public BigInteger getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(BigInteger version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

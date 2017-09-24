@@ -1,4 +1,4 @@
-package cloud.monitoring.impl.jobs.cli;
+package cloud.monitoring.jobs.cli;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

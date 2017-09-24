@@ -1,9 +1,9 @@
-package cloud.monitoring.impl.beans.impl;
+package cloud.monitoring.beans.impl;
 
 import cloud.monitoring.api.entities.configs.Config;
-import cloud.monitoring.impl.beans.ConfigurationBean;
-import cloud.monitoring.impl.jobs.JobPool;
-//import cloud.monitoring.impl.repositories.ConfigRepository;
+import cloud.monitoring.beans.ConfigurationBean;
+import cloud.monitoring.jobs.JobPool;
+//import cloud.monitoring.repositories.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package cloud.monitoring.impl.beans;
+package cloud.monitoring.beans;
 
 import cloud.monitoring.api.entities.configs.Config;
 

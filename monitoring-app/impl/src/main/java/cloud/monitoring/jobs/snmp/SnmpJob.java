@@ -1,9 +1,9 @@
-package cloud.monitoring.impl.jobs.snmp;
+package cloud.monitoring.jobs.snmp;
 
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpMetricConfig;
-import cloud.monitoring.impl.beans.MetricBean;
-import cloud.monitoring.impl.entities.Metric;
+import cloud.monitoring.beans.MetricBean;
+import cloud.monitoring.entities.Metric;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -45,6 +45,12 @@ public class SnmpJob implements Job {
         communityTarget.setAddress(new UdpAddress(snmpConfig.getIp() + "/" + snmpConfig.getPort()));
         communityTarget.setRetries(3);
         communityTarget.setTimeout(snmpConfig.getTimeout());
+        switch (snmpConfig.getVersion()){
+            case 1: communityTarget.setVersion(SnmpConstants.version1); break;
+            case 2: communityTarget.setVersion(SnmpConstants.version2c); break;
+            case 3: communityTarget.setVersion(SnmpConstants.version3); break;
+            default: throw new IllegalArgumentException("Incorrect version");
+        }
         communityTarget.setVersion(SnmpConstants.version2c);
 
         pdu = new PDU();
