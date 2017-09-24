@@ -1,15 +1,15 @@
 package cloud.monitoring;
 
-import org.quartz.SchedulerException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.io.IOException;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-public class MonitoringAppApplication {
+@ComponentScan
+public class MonitoringAppApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) throws IOException, SchedulerException {
+	public static void main(String[] args){
 		SpringApplication.run(MonitoringAppApplication.class, args);
 	}
 }
