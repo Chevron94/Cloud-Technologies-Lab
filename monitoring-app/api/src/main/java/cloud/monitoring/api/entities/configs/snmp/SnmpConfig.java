@@ -19,12 +19,12 @@ public class SnmpConfig extends Config {
     @JsonProperty(value = "timeout")
     private Integer timeout;
     @JsonProperty(value = "metrics")
-    private List<String> metrics;
+    private List<SnmpMetricConfig> metrics;
 
     public SnmpConfig() {
     }
 
-    public SnmpConfig(BigInteger objectID, String cron,  String community, String ip, BigInteger version, Integer port, Integer timeout, List<String> metrics) {
+    public SnmpConfig(BigInteger objectID, String cron,  String community, String ip, BigInteger version, Integer port, Integer timeout, List<SnmpMetricConfig> metrics) {
         super(objectID, ip, cron);
         this.community = community;
         this.version = version;
@@ -65,11 +65,11 @@ public class SnmpConfig extends Config {
         this.timeout = timeout;
     }
 
-    public List<String> getMetrics() {
+    public List<SnmpMetricConfig> getMetrics() {
         return metrics;
     }
 
-    public void setMetrics(List<String> metrics) {
+    public void setMetrics(List<SnmpMetricConfig> metrics) {
         this.metrics = metrics;
     }
 
