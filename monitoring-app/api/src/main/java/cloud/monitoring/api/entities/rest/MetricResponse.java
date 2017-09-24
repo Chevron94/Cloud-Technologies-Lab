@@ -1,5 +1,7 @@
 package cloud.monitoring.api.entities.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -7,8 +9,11 @@ import java.util.List;
  * Created by Roman on 24.09.2017 11:28.
  */
 public class MetricResponse {
+    @JsonProperty(value = "object-id")
     private BigInteger objectID;
+    @JsonProperty(value = "metric-id")
     private BigInteger metricID;
+    @JsonProperty(value = "metric-values")
     private List<MetricValue> metricValues;
 
     public MetricResponse() {

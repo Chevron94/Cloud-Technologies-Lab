@@ -1,5 +1,7 @@
 package cloud.monitoring.api.entities.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -7,7 +9,9 @@ import java.util.Date;
  * Created by Roman on 24.09.2017 11:32.
  */
 public class MetricValue {
+    @JsonProperty(value = "value")
     private BigDecimal value;
+    @JsonProperty(value = "date")
     private Date date;
 
     public MetricValue() {
