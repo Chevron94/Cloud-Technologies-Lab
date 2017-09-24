@@ -2,20 +2,26 @@ package cloud.monitoring.impl.jobs;
 
 import cloud.monitoring.api.entities.configs.Config;
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
+import cloud.monitoring.impl.beans.MetricBean;
 import cloud.monitoring.impl.jobs.cli.CLIJob;
 import cloud.monitoring.impl.jobs.snmp.SnmpJob;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static org.quartz.JobBuilder.newJob;
 
 /**
  * Created by Roman on 09.09.2017 14:25.
  */
+@Component
 public class JobPool {
 
-    private static Scheduler scheduler;
+    @Autowired
+    MetricBean metricBean;
 
+    private static Scheduler scheduler;
     static {
         try {
             scheduler = new StdSchedulerFactory().getScheduler();
@@ -23,12 +29,12 @@ public class JobPool {
         } catch (Exception ex) {
             //
         }
-
     }
 
-    public static void createOrUpdateSNMPJob(Config config) throws SchedulerException {
+    public void createJob(Config config) throws SchedulerException {
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("config", config);
+        jobDataMap.put("metricBean", metricBean);
         String key;
         Class jobClass;
         if (config instanceof SnmpConfig) {

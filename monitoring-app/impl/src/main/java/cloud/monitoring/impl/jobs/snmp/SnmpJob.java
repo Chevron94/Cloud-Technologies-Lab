@@ -2,6 +2,8 @@ package cloud.monitoring.impl.jobs.snmp;
 
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpMetricConfig;
+import cloud.monitoring.impl.beans.MetricBean;
+import cloud.monitoring.impl.entities.Metric;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -34,7 +36,7 @@ public class SnmpJob implements Job {
     public SnmpJob() {
     }
 
-    private void init(SnmpConfig snmpConfig) throws IOException {
+    private void init(SnmpConfig snmpConfig, MetricBean metricBean) throws IOException {
         TransportMapping transportMapping = new DefaultUdpTransportMapping();
         transportMapping.listen();
         snmp = new Snmp(transportMapping);
@@ -51,7 +53,7 @@ public class SnmpJob implements Job {
         }
         pdu.setType(PDU.GET);
         pdu.setMaxRepetitions(50);
-        responseListener = new SnmpResponseListener(snmpConfig);
+        responseListener = new SnmpResponseListener(snmpConfig, metricBean);
         configured = true;
     }
 
@@ -60,7 +62,7 @@ public class SnmpJob implements Job {
         try {
             if (!configured) {
                 JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
-                init((SnmpConfig) jobDataMap.get("config"));
+                init((SnmpConfig) jobDataMap.get("config"), (MetricBean)jobDataMap.get("metricBean"));
             }
             snmp.send(pdu, communityTarget, null, responseListener);
         } catch (IOException e) {
