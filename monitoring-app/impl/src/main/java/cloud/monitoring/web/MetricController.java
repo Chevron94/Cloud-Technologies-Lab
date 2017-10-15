@@ -3,6 +3,7 @@ package cloud.monitoring.web;
 import cloud.monitoring.beans.MetricBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +33,7 @@ public class MetricController {
                 if (date != null) {
                     return ResponseEntity.ok(metricBean.getMetrics(objectID, metricTypeID, date));
                 } else {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("\"count\" or \"from-date\" parameter should be passed");
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"count or from-date parameter should be passed\"\n}");
                 }
             }
     }

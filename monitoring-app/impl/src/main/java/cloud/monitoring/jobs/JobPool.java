@@ -5,12 +5,12 @@ import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.beans.MetricBean;
 import cloud.monitoring.jobs.cli.CLIJob;
 import cloud.monitoring.jobs.snmp.SnmpJob;
-import org.apache.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import static org.quartz.JobBuilder.newJob;
 
@@ -22,7 +22,7 @@ public class JobPool {
 
     @Autowired
     MetricBean metricBean;
-    private static final Logger LOGGER = Logger.getLogger(JobPool.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobPool.class);
     private static Scheduler scheduler;
 
     static {
@@ -35,6 +35,7 @@ public class JobPool {
     }
 
     public void createJob(Config config) {
+        LOGGER.info("incoming config: {}", config);
         JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("config", config);
         jobDataMap.put("metricBean", metricBean);
@@ -59,13 +60,23 @@ public class JobPool {
                 scheduler.rescheduleJob(new TriggerKey(key), trigger);
             }
             if (scheduler.checkExists(new JobKey(key))) {
-                scheduler.addJob(job, true);
+                scheduler.addJob(job, true, true);
             } else {
                 scheduler.scheduleJob(job, trigger);
             }
+            LOGGER.info("Job started with config: {}", config);
         } catch (Exception ex) {
             LOGGER.error("Configuration Apply Failed! ex: ", ex);
             throw new IllegalStateException("Configuration Apply Failed!");
+        }
+    }
+
+    public void clear(){
+        try {
+            scheduler.clear();
+        } catch (SchedulerException e) {
+            LOGGER.error("Cannon clean scheduler, ex: ", e);
+            throw new IllegalStateException("Configuration Clear Failed!");
         }
     }
 }

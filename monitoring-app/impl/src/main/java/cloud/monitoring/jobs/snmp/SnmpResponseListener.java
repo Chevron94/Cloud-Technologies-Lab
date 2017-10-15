@@ -4,7 +4,9 @@ import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpMetricConfig;
 import cloud.monitoring.beans.MetricBean;
 import cloud.monitoring.entities.Metric;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.snmp4j.PDU;
 import org.snmp4j.event.ResponseEvent;
 import org.snmp4j.event.ResponseListener;
@@ -21,7 +23,7 @@ import java.util.Map;
  */
 public class SnmpResponseListener implements ResponseListener {
 
-    private static final Logger LOGGER = Logger.getLogger(SnmpResponseListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SnmpResponseListener.class);
 
     private Map<String, BigInteger> metricsMapping;
     private MetricBean metricBean;
@@ -45,7 +47,7 @@ public class SnmpResponseListener implements ResponseListener {
                 metric.setDate(new Date());
                 metric.setValue(new BigDecimal(variableBinding.getVariable().toString()));
                 metric.setMetricTypeID(metricsMapping.get(variableBinding.getOid().toString()));
-                LOGGER.debug("Collected metric: "+ metric);
+                LOGGER.debug("Collected metric: {}", metric);
                 metricBean.storeMetric(metric);
             }
         }
