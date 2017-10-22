@@ -2,6 +2,7 @@ package cloud.monitoring.web;
 
 import cloud.monitoring.beans.MetricBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,12 @@ public class MetricController {
             @RequestParam(value = "object-id")BigInteger objectID,
             @RequestParam(value = "metric-type-id")BigInteger metricTypeID,
             @RequestParam(value = "count", required = false) Integer count,
-            @RequestParam(value = "from-date", required = false)Date date){
+            @RequestParam(value = "from-date", required = false) Long date){
             if (count != null){
                 return ResponseEntity.ok(metricBean.getMetrics(objectID, metricTypeID, count));
             } else {
                 if (date != null) {
-                    return ResponseEntity.ok(metricBean.getMetrics(objectID, metricTypeID, date));
+                    return ResponseEntity.ok(metricBean.getMetrics(objectID, metricTypeID, new Date(date)));
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"count or from-date parameter should be passed\"\n}");
                 }
