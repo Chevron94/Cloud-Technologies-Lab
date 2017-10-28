@@ -1,6 +1,7 @@
 package cloud.monitoring.api.entities.configs.cli;
 
 import cloud.monitoring.api.entities.configs.MetricConfig;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigInteger;
 
@@ -8,7 +9,9 @@ import java.math.BigInteger;
  * Created by Roman on 09.09.2017 12:31.
  */
 public class CLIMetricConfig extends MetricConfig {
+    @JsonProperty(value = "command")
     private String command;
+    @JsonProperty(value = "regexp")
     private String regexp;
 
     public CLIMetricConfig() {

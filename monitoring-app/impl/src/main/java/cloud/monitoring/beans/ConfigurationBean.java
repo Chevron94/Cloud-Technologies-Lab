@@ -1,6 +1,7 @@
 package cloud.monitoring.beans;
 
 import cloud.monitoring.api.entities.configs.Config;
+import cloud.monitoring.api.entities.configs.cli.CLIConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 
 import java.math.BigInteger;
@@ -13,4 +14,5 @@ public interface ConfigurationBean {
     Boolean applyConfiguration(Config config);
     void reloadConfigurations();
     SnmpConfig getSnmpConfigs(BigInteger objectID);
+    CLIConfig getCliConfigs(BigInteger objectID);
 }

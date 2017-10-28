@@ -1,5 +1,6 @@
 package cloud.monitoring.web;
 
+import cloud.monitoring.api.entities.configs.cli.CLIConfig;
 import cloud.monitoring.api.entities.configs.snmp.SnmpConfig;
 import cloud.monitoring.beans.ConfigurationBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,25 @@ public class ConfigurationController {
         SnmpConfig snmpConfig = configurationBean.getSnmpConfigs(objectID);
         if (snmpConfig != null) {
             return ResponseEntity.ok(snmpConfig);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"No SNMP configurations for object with id "+objectID+"\"\n}");
+        }
+    }
+
+    @RequestMapping(path = "/configurations/cli", method = RequestMethod.POST)
+    public ResponseEntity applyCliConfiguration(@RequestBody CLIConfig cliConfig){
+        if (configurationBean.applyConfiguration(cliConfig)){
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"Configuration apply success\"\n}");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"Configuration apply failed\"\n}");
+        }
+    }
+
+    @RequestMapping(path = "/configurations/cli", method = RequestMethod.GET)
+    public ResponseEntity getCliConfiguration(@RequestParam("object-id")BigInteger objectID){
+        CLIConfig cliConfig = configurationBean.getCliConfigs(objectID);
+        if (cliConfig != null) {
+            return ResponseEntity.ok(cliConfig);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"No SNMP configurations for object with id "+objectID+"\"\n}");
         }

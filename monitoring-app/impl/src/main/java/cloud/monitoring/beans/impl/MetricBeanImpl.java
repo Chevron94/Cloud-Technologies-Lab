@@ -5,7 +5,8 @@ import cloud.monitoring.api.entities.rest.MetricValue;
 import cloud.monitoring.beans.MetricBean;
 import cloud.monitoring.entities.Metric;
 import cloud.monitoring.repositories.MetricRepository;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Component
 public class MetricBeanImpl implements MetricBean {
-    private static final Logger LOGGER = Logger.getLogger(MetricBeanImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetricBeanImpl.class);
     @Autowired
     MetricRepository metricRepository;
 

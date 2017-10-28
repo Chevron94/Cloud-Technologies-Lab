@@ -1,6 +1,7 @@
 package cloud.monitoring.api.entities.configs.cli;
 
 import cloud.monitoring.api.entities.configs.Config;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -9,10 +10,15 @@ import java.util.List;
  * Created by Roman on 09.09.2017 12:31.
  */
 public class CLIConfig extends Config {
+    @JsonProperty(value = "login")
     private String login;
+    @JsonProperty(value = "password")
     private String password;
+    @JsonProperty(value = "timeout")
     private Integer timeout;
+    @JsonProperty(value = "port")
     private Integer port;
+    @JsonProperty(value = "metrics")
     private List<CLIMetricConfig> cliMetricConfigs;
 
     public CLIConfig() {

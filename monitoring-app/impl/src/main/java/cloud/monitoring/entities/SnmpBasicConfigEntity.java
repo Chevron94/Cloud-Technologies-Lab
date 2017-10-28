@@ -25,18 +25,21 @@ public class SnmpBasicConfigEntity {
     private Integer port;
     @Column(name = "timeout", nullable = false)
     private Integer timeout;
+    @Column(name = "cron", nullable = false)
+    private String cron;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "snmpBasicConfigEntity")
     private List<SnmpMetricConfigEntity> snmpMetricConfigEntities;
 
     public SnmpBasicConfigEntity() {
     }
 
-    public SnmpBasicConfigEntity(BasicConfigEntity basicConfigEntity, String community, Integer version, Integer port, Integer timeout, List<SnmpMetricConfigEntity> snmpMetricConfigEntities) {
+    public SnmpBasicConfigEntity(BasicConfigEntity basicConfigEntity, String community, Integer version, Integer port, Integer timeout, String cron, List<SnmpMetricConfigEntity> snmpMetricConfigEntities) {
         this.basicConfigEntity = basicConfigEntity;
         this.community = community;
         this.version = version;
         this.port = port;
         this.timeout = timeout;
+        this.cron = cron;
         this.snmpMetricConfigEntities = snmpMetricConfigEntities;
     }
 
@@ -88,6 +91,14 @@ public class SnmpBasicConfigEntity {
         this.timeout = timeout;
     }
 
+    public String getCron() {
+        return cron;
+    }
+
+    public void setCron(String cron) {
+        this.cron = cron;
+    }
+
     public List<SnmpMetricConfigEntity> getSnmpMetricConfigEntities() {
         return snmpMetricConfigEntities;
     }
@@ -105,6 +116,7 @@ public class SnmpBasicConfigEntity {
                 ", version=" + version +
                 ", port=" + port +
                 ", timeout=" + timeout +
+                ", cron='" + cron + '\'' +
                 '}';
     }
 }

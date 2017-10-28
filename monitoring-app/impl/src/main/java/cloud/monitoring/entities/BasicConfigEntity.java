@@ -1,5 +1,8 @@
 package cloud.monitoring.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
@@ -18,19 +21,22 @@ public class BasicConfigEntity {
     private BigInteger objectID;
     @Column(name = "ip", nullable = false)
     private String ip;
-    @Column(name = "cron", nullable = false)
-    private String cron;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "basicConfigEntity")
+    @Fetch(FetchMode.SELECT)
     private List<SnmpBasicConfigEntity> snmpBaseConfigs;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "basicConfigEntity")
+    @Fetch(FetchMode.SELECT)
+    private List<CliBasicConfigEntity> cliBasicConfigEntities;
 
     public BasicConfigEntity() {
     }
 
-    public BasicConfigEntity(BigInteger objectID, String ip, String cron, List<SnmpBasicConfigEntity> snmpBaseConfigs) {
+    public BasicConfigEntity(BigInteger objectID, String ip, List<SnmpBasicConfigEntity> snmpBaseConfigs, List<CliBasicConfigEntity> cliBasicConfigEntities) {
         this.objectID = objectID;
         this.ip = ip;
-        this.cron = cron;
         this.snmpBaseConfigs = snmpBaseConfigs;
+        this.cliBasicConfigEntities = cliBasicConfigEntities;
     }
 
     public BigInteger getId() {
@@ -57,14 +63,6 @@ public class BasicConfigEntity {
         this.ip = ip;
     }
 
-    public String getCron() {
-        return cron;
-    }
-
-    public void setCron(String cron) {
-        this.cron = cron;
-    }
-
     public List<SnmpBasicConfigEntity> getSnmpBaseConfigs() {
         return snmpBaseConfigs;
     }
@@ -73,13 +71,20 @@ public class BasicConfigEntity {
         this.snmpBaseConfigs = snmpBaseConfigs;
     }
 
+    public List<CliBasicConfigEntity> getCliBasicConfigEntities() {
+        return cliBasicConfigEntities;
+    }
+
+    public void setCliBasicConfigEntities(List<CliBasicConfigEntity> cliBasicConfigEntities) {
+        this.cliBasicConfigEntities = cliBasicConfigEntities;
+    }
+
     @Override
     public String toString() {
         return "BasicConfigEntity{" +
                 "id=" + id +
                 ", objectID=" + objectID +
                 ", ip='" + ip + '\'' +
-                ", cron='" + cron + '\'' +
                 '}';
     }
 }

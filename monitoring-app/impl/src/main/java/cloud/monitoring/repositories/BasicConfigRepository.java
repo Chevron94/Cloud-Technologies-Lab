@@ -10,5 +10,4 @@ import java.math.BigInteger;
  */
 public interface BasicConfigRepository extends JpaRepository<BasicConfigEntity, BigInteger> {
     BasicConfigEntity getBasicConfigsByObjectID(BigInteger objectID);
-
 }
