@@ -86,7 +86,7 @@ public class ConfigurationBeanImpl implements ConfigurationBean {
     @Override
     public SnmpConfig getSnmpConfigs(BigInteger objectID) {
         BasicConfigEntity basicConfigEntity = configRepository.getBasicConfigsByObjectID(objectID);
-        if (basicConfigEntity != null) {
+        if (basicConfigEntity != null && !basicConfigEntity.getSnmpBaseConfigs().isEmpty()) {
             return buildSnmpConfig(basicConfigEntity);
         } else {
             return null;
@@ -96,7 +96,7 @@ public class ConfigurationBeanImpl implements ConfigurationBean {
     @Override
     public CLIConfig getCliConfigs(BigInteger objectID) {
         BasicConfigEntity basicConfigEntity = configRepository.getBasicConfigsByObjectID(objectID);
-        if (basicConfigEntity != null) {
+        if (basicConfigEntity != null && !basicConfigEntity.getCliBasicConfigEntities().isEmpty()) {
             return buildCliConfig(basicConfigEntity);
         } else {
             return null;
