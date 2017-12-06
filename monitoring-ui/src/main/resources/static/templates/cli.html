@@ -1,0 +1,76 @@
+<md-content md-scroll-y layout-column style="padding-left: 100px; padding-right: 100px" ng-repeat="cli in clis">
+
+	<md-card md-theme="default" md-theme-watch >    
+      	<md-toolbar layout="row">
+	        <div class="md-toolbar-tools">
+	        	<h2 flex md-truncate>CLI Конфигурация {{devices[clis[$index]['object-id']]}}</h2>
+	        </div>
+   		</md-toolbar>
+   		<md-card-content>
+   			<div layout-gt-xs="row">
+   				<md-input-container flex>
+					<label>Устройство</label>
+				    <md-select ng-model="cli['object-id']">			    
+				    	<md-option ng-value="id" ng-repeat="(id, name) in devices">{{ name }}</md-option>
+				    </md-select>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Расписание запуска</label>
+				    <input ng-model="cli.cron">
+				</md-input-container>
+   			</div>	
+   			<div layout-gt-xs="row">
+   				<md-input-container flex>
+					<label>Адрес</label>
+				    <input ng-model="cli.ip"></input>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Порт</label>
+				    <input ng-model="cli.port"></input>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Timeout</label>
+				    <input ng-model="cli.timeout"></input>
+				</md-input-container>
+   			</div>	
+   			<div layout-gt-xs="row">
+   				<md-input-container flex>
+					<label>Логин</label>
+				    <input ng-model="cli.login"></input>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Пароль</label>
+				    <input ng-model="cli.password"></input>
+				</md-input-container>				
+   			</div>	
+   			<div style="color: rgba(0,0,0,0.38); font-family: Roboto, 'Helvetica Neue', sans-serif;">
+	   			<div layout-gt-xs="row">   				
+	   				<p>Метрики</p>
+	   				 <md-button class="md-icon-button" ng-click="addMetric($index)">
+	          			<i class="material-icons">add</i>
+	        		 </md-button>
+	   			</div>
+	   			<div layout-gt-xs="row" ng-repeat="metric in cli.metrics">
+	   				<md-input-container flex>
+						<label>Команда</label>
+					    <input ng-model="metric.command"></input>
+					</md-input-container>
+					<md-input-container flex>
+						<label>Выражение</label>
+					    <input ng-model="metric.regexp"></input>
+					</md-input-container>	
+					<md-button class="md-fab md-mini" ng-click="deleteMetric($parent.$index, $index)">
+			            <i class="material-icons">delete</i>
+				    </md-button>			
+	   			</div>	
+   			</div>	
+		</md-card-content>  
+		<md-card-actions layout="row" layout-align="end center">
+		   <md-button ng-click="save($index)">Сохранить</md-button>
+		</md-card-actions>  
+      </md-card>    
+           
+ </md-content>
+  <md-button class="md-fab" style="position: fixed; bottom: 20px; right: 30px; z-index: 99;  border: none; outline: none; padding: 15px;" aria-label="Add a configuration" ng-click="addClick()">
+	<md-icon>add</md-icon>
+</md-button>

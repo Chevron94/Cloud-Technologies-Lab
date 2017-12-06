@@ -5,6 +5,8 @@ import ru.vsu.monitoringui.models.configs.Config;
 import java.math.BigInteger;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Roman on 09.09.2017 12:31.
  */
@@ -13,6 +15,8 @@ public class CLIConfig extends Config {
     private String password;
     private Integer timeout;
     private Integer port;
+    
+    @JsonProperty("metrics")
     private List<CLIMetricConfig> cliMetricConfigs;
 
     public CLIConfig() {

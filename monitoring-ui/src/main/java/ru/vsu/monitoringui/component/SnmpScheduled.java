@@ -30,7 +30,7 @@ public class SnmpScheduled implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		objectMapper.objects().forEach(this::createSnmpWebClients);
 	}
-
+	
 	@Scheduled(fixedRate = 60 * 1000)
 	public void scheduled() {
 		clients.forEach(this::sendAndSubscribe);
@@ -49,7 +49,7 @@ public class SnmpScheduled implements InitializingBean {
 	        .subscribe(config -> createSnmpWebClient(object, config));
 	}
 	
-	private void createSnmpWebClient(ObjectModel object, SnmpConfig config) {
+	public void createSnmpWebClient(ObjectModel object, SnmpConfig config) {
 		clients.addAll(config.getMetrics()
 				.stream()
 				.map(m -> new SnmpWebClient(object.getUri(), object.getObjectId(), m.getMetricID()))

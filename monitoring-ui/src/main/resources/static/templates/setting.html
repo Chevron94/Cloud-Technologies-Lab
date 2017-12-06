@@ -1,0 +1,78 @@
+<md-content class="md-padding" layout-xs="column" layout="row">
+    <div  layout="column" flex>
+      <md-card md-theme="default" md-theme-watch >    
+      	<md-toolbar layout="row">
+	        <div class="md-toolbar-tools">
+	        	<h2 flex md-truncate>Сервера</h2>
+	            <md-button class="md-icon-button" ng-click="addServer()">
+	          		<i class="material-icons">add</i>
+	        	</md-button>
+	        </div>
+   			 </md-toolbar>
+   			 <md-card-content>
+			<div  class="md-inline-form ">
+				<div layout-gt-xs="row" ng-repeat="server in servers">
+			      <md-input-container>
+			        <label>Название</label>
+			        <input ng-model="server.name" ng-change="servers[$index].change = true">
+			      </md-input-container>
+			
+			      <md-input-container class="md-block" flex-gt-xs>
+			        <label>Адрес</label>
+			        <input ng-model="server.uri" ng-change="servers[$index].change = true">
+			      </md-input-container>
+			      			
+			      <md-button class="md-fab md-mini md-primary" ng-disabled="!servers[$index].change" ng-click="updateServer($index)">
+			      	<i class="material-icons">done</i>
+			      </md-button>
+			      
+			      <md-button class="md-fab md-mini" ng-click="deleteServer($index)">
+		            <i class="material-icons">delete</i>
+			      </md-button>
+			    </div>
+			</div>
+		</md-card-content>    
+      </md-card>    
+   </div>
+   
+  
+   <div  layout="column" flex>
+      <md-card md-theme="default" md-theme-watch >    
+      	<md-toolbar layout="row">
+	        <div class="md-toolbar-tools">
+	        	<h2 flex md-truncate>Устройства</h2>
+	            <md-button class="md-icon-button" ng-click="addDevice()">
+	          		<i class="material-icons">add</i>
+	        	</md-button>
+	        </div>
+   			 </md-toolbar>
+   			 <md-card-content>
+			<div  class="md-inline-form ">
+				<div layout-gt-xs="row" ng-repeat="device in devices">
+			      <md-input-container>
+			        <label>Сервер</label>
+			        <md-select ng-model="devices[$index].serverId" ng-change="devices[$index].change = true">			    
+			        	<md-option ng-value="server.id" ng-repeat="server in selectedServers track by server.id">{{ server.name }}</md-option>
+			        </md-select>
+			      </md-input-container>
+			
+			      <md-input-container class="md-block" flex-gt-xs>
+			        <label>Название</label>
+			        <input ng-model="device.name" ng-change="devices[$index].change = true">
+			      </md-input-container>
+			      			
+			      <md-button class="md-fab md-mini md-primary" ng-disabled="!devices[$index].change" ng-click="updateDevice($index)">
+			      	<i class="material-icons">done</i>
+			      </md-button>
+			      
+			      <md-button class="md-fab md-mini" ng-click="deleteDevice($index)">
+		            <i class="material-icons">delete</i>
+			      </md-button>
+			    </div>
+			</div>
+		</md-card-content>    
+      </md-card>    
+   </div>
+    
+</md-content>
+  

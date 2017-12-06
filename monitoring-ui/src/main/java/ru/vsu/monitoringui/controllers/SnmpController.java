@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
@@ -17,8 +16,8 @@ public class SnmpController {
 	private SubscribableChannel snmpChannel;
 	
 		
-	@GetMapping(value = "/metrics/{object}", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
-	public Flux<String> metrics(@PathVariable String object) {
+	@GetMapping(value = "/metrics", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
+	public Flux<String> metrics() {
 		return Flux.create(sink -> {
 			MessageHandler messageHandler = msg -> sink.next(String.class.cast(msg.getPayload()));			snmpChannel.subscribe(messageHandler);
 		});

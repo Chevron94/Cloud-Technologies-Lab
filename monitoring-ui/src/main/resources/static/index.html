@@ -1,0 +1,75 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	
+	<link rel="stylesheet" type="text/css" href="css/angular-material.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/watchdog.css"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script type="text/javascript" src="lib/angular/lodash.compat.js"></script>
+	<script type="text/javascript" src="lib/angular/chart.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="lib/angular/restangular.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-animate.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-aria.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-material.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-messages.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular-chart.min.js"></script>
+
+	<script type="text/javascript" src="js/angular/app.js"></script>
+	<script type="text/javascript" src="js/angular/controllers/AppCtrl.js"></script>	
+	<script type="text/javascript" src="js/angular/controllers/MonitoringCtrl.js"></script>
+	<script type="text/javascript" src="js/angular/controllers/SnmpCtrl.js"></script>
+	<script type="text/javascript" src="js/angular/controllers/CliCtrl.js"></script>
+	<script type="text/javascript" src="js/angular/controllers/SettingCtrl.js"></script>
+	
+	<script type="text/javascript" src="js/angular/services/SettingsService.js"></script>
+	<script type="text/javascript" src="js/angular/services/ConfigurationService.js"></script>
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <base href="/">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   
+</head>
+<body ng-app="monitoring">
+	<md-content flex layout-fill>
+
+	    <md-toolbar class="md-hue-2">
+	      <div class="md-toolbar-tools">      
+	        <h2>
+	          <span>Monitoring</span>
+	        </h2>
+	      </div>
+	    </md-toolbar>
+		<div ng-controller="AppCtrl" ng-cloak>
+		 	<md-nav-bar
+		      md-no-ink-bar="disableInkBar"
+		      md-selected-nav-item="currentNavItem"
+		      nav-bar-aria-label="navigation links">
+		      <md-nav-item md-nav-click="goto('app.monitoring')" name="monitoring" active>
+		        Мониторинг
+		      </md-nav-item>
+		      <md-nav-item md-nav-click="goto('app.snmp')" name="snmp">
+		        SNMP Конфигурации
+		      </md-nav-item>
+		      <md-nav-item md-nav-click="goto('app.cli')" name="cli">
+		        CLI Конфигурации
+		      </md-nav-item>
+		      <md-nav-item md-nav-click="goto('app.setting')" name="setting">
+		        Настройки
+		      </md-nav-item>
+		    </md-nav-bar>
+		</div>
+	 	<div class="row" style="padding: 3px"> 	
+			<div ui-view ng-cloak>
+			</div>    
+	  	</div>
+	</md-content>
+
+	
+</body>
+</html>
