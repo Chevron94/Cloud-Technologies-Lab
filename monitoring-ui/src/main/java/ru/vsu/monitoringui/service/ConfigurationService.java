@@ -3,12 +3,15 @@ package ru.vsu.monitoringui.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,6 +27,8 @@ public class ConfigurationService {
 	private static final String SNMP_URL = "/configurations/snmp";
 	
 	private static final String CLI_URL = "/configurations/cli";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationService.class);
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -99,8 +104,8 @@ public class ConfigurationService {
 		        	clazz
 		        )
 				.getBody();
-		} catch(Exception e) {
-			System.err.println(e.getMessage());
+		} catch(HttpClientErrorException e) {
+			LOGGER.error("POST request failed, status: "+e.getStatusCode()+" body: "+e.getResponseBodyAsString());
 		}
 		
 		return null;
@@ -123,8 +128,8 @@ public class ConfigurationService {
 		        	clazz
 		        )
 				.getBody();
-		} catch(Exception e) {
-			System.err.println(e.getMessage());
+		} catch(HttpClientErrorException e) {
+			LOGGER.error("GET request failed, status: "+e.getStatusCode()+" body: "+e.getResponseBodyAsString());
 		}
 		
 		return null;

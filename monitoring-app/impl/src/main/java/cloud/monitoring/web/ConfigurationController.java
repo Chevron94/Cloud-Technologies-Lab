@@ -58,7 +58,7 @@ public class ConfigurationController {
         if (cliConfig != null) {
             return ResponseEntity.ok(cliConfig);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"No SNMP configurations for object with id "+objectID+"\"\n}");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body("{\n\t\"message\":\"No CLI configurations for object with id "+objectID+"\"\n}");
         }
     }
 }
