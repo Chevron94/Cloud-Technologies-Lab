@@ -31,7 +31,7 @@ public class SnmpScheduled implements InitializingBean {
 		objectMapper.objects().forEach(this::createSnmpWebClients);
 	}
 	
-	@Scheduled(fixedRate = 60 * 1000)
+	@Scheduled(fixedRate = 5 * 1000)
 	public void scheduled() {
 		clients.forEach(this::sendAndSubscribe);
 	}
