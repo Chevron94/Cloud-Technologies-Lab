@@ -71,7 +71,7 @@ public class ConfigurationService {
 		ObjectModel object = objectMapper.object(config.getObjectID());
 		SnmpConfig snmpConfig = sendPostRequest(object, SNMP_URL, SnmpConfig.class, config);
 		if (snmpConfig != null) {
-			scheduled.createSnmpWebClient(object, snmpConfig);
+			scheduled.createSnmpWebClient(object, config);
 		}
 	}
 	
