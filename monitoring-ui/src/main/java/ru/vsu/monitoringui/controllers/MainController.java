@@ -5,6 +5,8 @@ package ru.vsu.monitoringui.controllers;
  */
 
 import org.apache.http.client.utils.URIBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
@@ -21,6 +23,8 @@ import java.net.URISyntaxException;
 
 @Controller
 public class MainController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     @Value("${vk.auth.url}")
     private String authUrl;
@@ -61,6 +65,7 @@ public class MainController {
                 .addParameter("client_secret", clientSecret)
                 .addParameter("code", code)
                 .addParameter("redirect_url", "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth");
+        LOGGER.info(uriBuilder.build().toString());
         VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
         req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
         return new RedirectView("/");
