@@ -9,13 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpCookie;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.result.view.RedirectView;
+import org.springframework.web.server.ServerWebExchange;
 import ru.vsu.monitoringui.entities.VkEntity;
 
 import java.net.URISyntaxException;
@@ -42,8 +45,8 @@ public class MainController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/")
-    public RedirectView index(ServerHttpRequest req) throws URISyntaxException {
-        if (isAuthenticated(req)) {
+    public RedirectView index(ServerWebExchange exchange) throws URISyntaxException {
+        if (isAuthenticated(exchange.getRequest())) {
             return new RedirectView("index.html");
         } else {
             URIBuilder uriBuilder = new URIBuilder(authUrl);
@@ -60,7 +63,7 @@ public class MainController {
     }
 
     @RequestMapping("/auth")
-    public RedirectView auth(@RequestParam("code") String code, ServerHttpRequest req) throws URISyntaxException {
+    public RedirectView auth(@RequestParam("code") String code, ServerWebExchange exchange) throws URISyntaxException {
         URIBuilder uriBuilder = new URIBuilder(accessUrl);
         uriBuilder.addParameter("client_id", appID)
                 .addParameter("client_secret", clientSecret)
@@ -69,14 +72,15 @@ public class MainController {
         LOGGER.info(uriBuilder.build().toString());
         try {
             VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
-            req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
-        } catch (Exception ex) {
-            req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(code)));
+            exchange.getResponse().addCookie(ResponseCookie.from("auth", vkEntity.getUserId().toString()).build());
+        } catch (RestClientException ex) {
+            LOGGER.error("Auth failed, error: "+ex.getMessage(), ex);
+            exchange.getResponse().addCookie(ResponseCookie.from("auth", code).build());
         }
         return new RedirectView("/");
     }
 
     private Boolean isAuthenticated(ServerHttpRequest request) {
-        return request.getCookies().containsKey("auth");
+        return request.getCookies().getFirst("auth") != null;
     }
 }
