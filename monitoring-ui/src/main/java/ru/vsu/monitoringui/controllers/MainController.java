@@ -55,7 +55,7 @@ public class MainController {
 
     @RequestMapping("/auth")
     public RedirectView auth(ServerHttpRequest req) throws URISyntaxException {
-        String code = req.getQueryParams().getFirst("CODE");
+        String code = req.getQueryParams().getFirst("code");
         URIBuilder uriBuilder = new URIBuilder(accessUrl);
         uriBuilder.addParameter("client_id", appID)
                 .addParameter("client_secret", clientSecret)
