@@ -67,8 +67,12 @@ public class MainController {
                 .addParameter("code", code)
                 .addParameter("redirect_url", "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth");
         LOGGER.info(uriBuilder.build().toString());
-        VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
-        req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
+        try {
+            VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
+            req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
+        } catch (Exception ex) {
+            req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(code)));
+        }
         return new RedirectView("/");
     }
 
