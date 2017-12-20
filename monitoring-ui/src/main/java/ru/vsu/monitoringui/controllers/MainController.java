@@ -4,12 +4,6 @@ package ru.vsu.monitoringui.controllers;
  * Created by Roman on 19.12.2017 21:13.
  */
 
-import com.vk.api.sdk.client.TransportClient;
-import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.UserAuthResponse;
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,21 +60,15 @@ public class MainController {
     }
 
     @RequestMapping("/auth")
-    public RedirectView auth(@RequestParam("code") String code, ServerHttpRequest req) throws URISyntaxException, ClientException, ApiException {
-//        URIBuilder uriBuilder = new URIBuilder(accessUrl);
-//        uriBuilder.addParameter("client_id", appID)
-//                .addParameter("client_secret", clientSecret)
-//                .addParameter("code", code)
-//                .addParameter("redirect_url", "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth");
-//        LOGGER.info(uriBuilder.build().toString());
-//        VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
-//        req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
-        TransportClient transportClient = HttpTransportClient.getInstance();
-        VkApiClient vk = new VkApiClient(transportClient);
-        UserAuthResponse authResponse = vk.oauth()
-                .userAuthorizationCodeFlow(Integer.valueOf(appID), clientSecret, "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth", code)
-                .execute();
-        req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(authResponse.getUserId())));
+    public RedirectView auth(@RequestParam("code") String code, ServerHttpRequest req) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(accessUrl);
+        uriBuilder.addParameter("client_id", appID)
+                .addParameter("client_secret", clientSecret)
+                .addParameter("code", code)
+                .addParameter("redirect_url", "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth");
+        LOGGER.info(uriBuilder.build().toString());
+        VkEntity vkEntity = restTemplate.getForEntity(uriBuilder.build().toString(), VkEntity.class).getBody();
+        req.getCookies().add("auth", new HttpCookie("auth", String.valueOf(vkEntity.getUserId())));
         return new RedirectView("/");
     }
 
