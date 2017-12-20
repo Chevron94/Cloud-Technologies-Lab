@@ -11,6 +11,7 @@ import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.result.view.RedirectView;
 import ru.vsu.monitoringui.entities.VkEntity;
@@ -54,8 +55,7 @@ public class MainController {
     }
 
     @RequestMapping("/auth")
-    public RedirectView auth(ServerHttpRequest req) throws URISyntaxException {
-        String code = req.getQueryParams().getFirst("code");
+    public RedirectView auth(@RequestParam("code") String code, ServerHttpRequest req) throws URISyntaxException {
         URIBuilder uriBuilder = new URIBuilder(accessUrl);
         uriBuilder.addParameter("client_id", appID)
                 .addParameter("client_secret", clientSecret)
