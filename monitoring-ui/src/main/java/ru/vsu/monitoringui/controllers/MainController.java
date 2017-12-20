@@ -47,6 +47,7 @@ public class MainController {
                     .addParameter("display", "page")
                     .addParameter("scope", "friends")
                     .addParameter("response_type", "code")
+                    .addParameter("redirect_uri", "http://monitoring-ui-cloud-monitoring.1d35.starter-us-east-1.openshiftapps.com/auth")
                     .addParameter("v", "5.69").build().toString();
             return new RedirectView(uri);
         }
